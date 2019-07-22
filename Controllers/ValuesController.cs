@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using RednitDating.Api.Data;
 
 namespace _.Controllers
 {
-    
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -32,7 +33,7 @@ namespace _.Controllers
         }
 
         // GET api/values/5
-        //[EnableCors]
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {
@@ -40,25 +41,5 @@ namespace _.Controllers
             return Ok(value);
         }
 
-        // POST api/values
-
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        //[EnableCors]
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        //[EnableCors]
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
