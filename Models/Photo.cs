@@ -14,5 +14,9 @@ namespace RednitDating.Api.Models
         public DateTime DateAdded { get; set; }
 
         public bool IsProfile { get; set; }
+
+        public User User { get; set; }
+
+        public int UserId { get; set; }
     }
 }

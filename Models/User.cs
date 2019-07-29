@@ -13,7 +13,7 @@ namespace RednitDating.Api.Models
 
         public string Gender { get; set; }
 
-        public string KnownAS { get; set; }
+        public string KnownAs { get; set; }
 
         public DateTime DOB { get; set; }
 
