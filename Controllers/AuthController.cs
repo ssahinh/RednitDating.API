@@ -16,6 +16,7 @@ namespace RednitDating.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+       
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
         public AuthController(IAuthRepository repo, IConfiguration config)
