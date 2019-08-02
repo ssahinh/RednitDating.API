@@ -9,7 +9,7 @@ using RednitDating.Api.Data;
 namespace _.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190729145831_ExtendedUserClass")]
+    [Migration("20190730144234_ExtendedUserClass")]
     partial class ExtendedUserClass
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace _.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<DateTime>("DOB");
+                    b.Property<DateTime>("DateOfBirth");
 
                     b.Property<string>("Gender");
 

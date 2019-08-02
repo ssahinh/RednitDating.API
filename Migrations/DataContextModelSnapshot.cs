@@ -49,7 +49,7 @@ namespace _.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<DateTime>("DOB");
+                    b.Property<DateTime>("DateOfBirth");
 
                     b.Property<string>("Gender");
 

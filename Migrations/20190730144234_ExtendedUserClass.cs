@@ -24,7 +24,7 @@ namespace _.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "DOB",
+                name: "DateOfBirth",
                 table: "Users",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
@@ -107,7 +107,7 @@ namespace _.Migrations
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "DOB",
+                name: "DateOfBirth",
                 table: "Users");
 
             migrationBuilder.DropColumn(
