@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RednitDating.Api.Models;
@@ -32,6 +33,11 @@ namespace RednitDating.Api.Data
         {
             var photo = await _context.Photos.FirstOrDefaultAsync( p => p.Id == id);
             return photo;
+        }
+
+        public async Task<Photo> GetProfile(int userId)
+        {
+            return await _context.Photos.Where(u => u.UserId == userId).FirstOrDefaultAsync(p => p.IsProfile);
         }
 
         public async Task<User> GetUser(int Id)

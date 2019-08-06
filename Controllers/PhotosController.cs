@@ -51,7 +51,7 @@ namespace RednitDating.Api.Controllers
 
         // CM 08/02/2019
         [HttpPost]
-        public async Task<IActionResult> AddPhotoForUser(int userId, [FromForm] PhotoForCreationDto photoForCreationDto)
+        public async Task<IActionResult> AddPhotoForUser(int userId, [FromForm]PhotoForCreationDto photoForCreationDto)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
@@ -96,7 +96,80 @@ namespace RednitDating.Api.Controllers
 
             return BadRequest("Failed to add photo");
         }
-    }
 
+        [HttpPost("{id}/setMain")]
+        public async Task<IActionResult> SetMainPhoto(int userId, int id) 
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }   
+
+            var user = await _repo.GetUser(userId);
+
+            if(!user.Photos.Any(p => p.Id == id))
+            {
+                return Unauthorized();
+            }
+            
+            var photoFromRepo = await _repo.GetPhoto(id);
+            
+            if (photoFromRepo.IsProfile)
+                return BadRequest("Already the profile photo");
+            
+            var currentProfilePhoto = await _repo.GetProfile(userId);
+
+            currentProfilePhoto.IsProfile = false;
+            photoFromRepo.IsProfile = true;
+
+            if (await _repo.SaveAll())
+                return NoContent();
+            
+            return BadRequest("Could not set photo to profile");
+        }
+        // CM 08/06/2019
+        // This method deletes a user photo from the database
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePhoto(int userId, int id) 
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }   
+
+            var user = await _repo.GetUser(userId);
+
+            if(!user.Photos.Any(p => p.Id == id))
+            {
+                return Unauthorized();
+            }
+            
+            var photoFromRepo = await _repo.GetPhoto(id);
+            
+            // Validates whether or not the photo is the profile picture
+            if (photoFromRepo.IsProfile)
+                return BadRequest("Cannot delete the profile photo");
+            
+            if (photoFromRepo.PublicId != null){
+                var deleteParams = new DeletionParams(photoFromRepo.PublicId);
+                // Destroy requires deleteParams
+                var result = _cloudinary.Destroy(deleteParams);
+
+                if(result.Result == "ok") 
+                {
+                    _repo.Delete(photoFromRepo);
+                }
+            }
+            // publicId is null Delete
+            if (photoFromRepo.PublicId == null)
+            {    
+                _repo.Delete(photoFromRepo);
+            }
+
+            if( await _repo.SaveAll())
+                   return Ok();
+            return BadRequest("Failed to delete the photo");
+        }
+    }
 
 }
