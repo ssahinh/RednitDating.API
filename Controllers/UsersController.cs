@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RednitDating.Api.Data;
 using RednitDating.Api.DTOs;
+using RednitDating.Api.Helpers;
 using RednitDating.Api.Models;
 
 namespace RednitDating.Api.Controllers
 {
+    [ServiceFilter(typeof(LogUserActivity))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
