@@ -9,6 +9,9 @@ namespace RednitDating.Api.Helpers
         {    get { return pageSize; }
             set { pageSize = (value > MagPageSize) ? MagPageSize : value; }
         }
+
+        public int UserId { get; set; }
+        public string Gender { get; set; }
     }
         
 }
