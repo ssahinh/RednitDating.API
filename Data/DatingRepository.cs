@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using RednitDating.Api.Helpers;
 using RednitDating.Api.Models;
 
 namespace RednitDating.Api.Data
@@ -47,10 +48,11 @@ namespace RednitDating.Api.Data
             return user;
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users = await _context.Users.Include(p => p.Photos).ToListAsync();
-            return users;
+             
+            var users = _context.Users.Include(p => p.Photos);
+            return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
 
   
