@@ -15,6 +15,7 @@ namespace RednitDating.Api.Data
         Task<User> GetUser(int Id);
         Task<Photo> GetPhoto(int id);
         Task<Photo> GetProfile(int userId);
-
+        Task<Like> GetLike(int userId, int recipientId);
+    
     }
 }
